@@ -14,7 +14,7 @@ export async function sendPartnerWelcomeEmail({
   partnerUrl: string;
 }) {
   await resend.emails.send({
-    from: "Moving Mountains <office@movingmountainspartners.com>",
+    from: "Moving Mountains <onboarding@resend.dev>",
     to,
     subject: `Your Moving Mountains partner page is live, ${firstName}!`,
     html: `
