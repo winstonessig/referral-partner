@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { partners } from "@/lib/schema";
+import { sendPartnerWelcomeEmail } from "@/lib/email";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
@@ -68,11 +69,21 @@ export async function POST(request: Request) {
       headshotUrl,
     });
 
+    // Send welcome email to partner with their page link
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://moving-mountains-partners.vercel.app";
+    const partnerUrl = `${siteUrl}/partner/${slug}`;
+
+    sendPartnerWelcomeEmail({
+      to: email,
+      firstName,
+      lastName,
+      partnerUrl,
+    }).catch((err) => console.error("Welcome email error:", err));
+
     // Send Quo text notifications to Winston and Benn
     const quoApiKey = process.env.QUO_API_KEY;
     if (quoApiKey) {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://moving-mountains-partners.vercel.app";
-      const message = `New referral partner signup!\n\n${firstName} ${lastName}\n${companyName} — ${brokerage}\n${email} | ${phone}\n\nPartner page: ${siteUrl}/partner/${slug}`;
+      const message = `New referral partner signup!\n\n${firstName} ${lastName}\n${companyName} — ${brokerage}\n${email} | ${phone}\n\nPartner page: ${partnerUrl}`;
 
       const notifyNumbers = [
         "+13093605587", // Benn

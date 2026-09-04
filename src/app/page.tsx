@@ -4,8 +4,8 @@ import PartnerForm from "@/components/PartnerForm";
 export default function Home() {
   return (
     <main>
-      {/* HERO - Navy background */}
-      <section className="relative bg-navy min-h-[85vh] flex items-center overflow-hidden">
+      {/* HERO WITH FORM - Navy background */}
+      <section className="relative bg-navy overflow-hidden">
         {/* Geometric line pattern bleeding off right edge */}
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
           <Image
@@ -17,39 +17,99 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 w-full">
-          <div className="max-w-3xl">
-            <p className="accent-text text-orange text-2xl md:text-3xl mb-4">
-              Setting your next chapter in motion.
-            </p>
-            <h1 className="heading text-5xl md:text-7xl lg:text-8xl text-white leading-[0.95] mb-6">
-              PARTNER WITH
-              <br />
-              <span className="text-orange">MOVING MOUNTAINS</span>
-            </h1>
-            <p className="text-blue text-lg md:text-xl max-w-xl mb-8">
-              Join our referral program. Give your clients $100 off their move
-              when they book with Moving Mountains.
-            </p>
-            <a href="#partner-form" className="btn-brand btn-orange text-sm">
-              BECOME A PARTNER
-            </a>
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-16 md:py-24 w-full">
+          {/* Bigger logo at top */}
+          <div className="mb-10">
+            <Image
+              src="/brand/secondary_orange.svg"
+              alt="Moving Mountains"
+              width={280}
+              height={60}
+              priority
+            />
           </div>
 
-          {/* Mountain badge */}
-          <div className="absolute right-8 bottom-12 hidden lg:block opacity-20">
-            <Image
-              src="/brand/mountainbadge_orange.svg"
-              alt=""
-              width={300}
-              height={300}
-              aria-hidden="true"
-            />
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left - Copy */}
+            <div className="pt-4">
+              <p className="accent-text text-orange text-2xl md:text-3xl mb-4">
+                Setting your next chapter in motion.
+              </p>
+              <h1 className="heading text-4xl md:text-6xl lg:text-7xl text-white leading-[0.95] mb-6">
+                PARTNER WITH
+                <br />
+                <span className="text-orange">MOVING MOUNTAINS</span>
+              </h1>
+              <p className="text-blue text-lg md:text-xl max-w-xl mb-8">
+                Join our referral program. Give your clients $100 off their move
+                when they book with Moving Mountains.
+              </p>
+
+              {/* Mountain badge */}
+              <div className="hidden md:block opacity-15 mt-8">
+                <Image
+                  src="/brand/mountainbadge_orange.svg"
+                  alt=""
+                  width={200}
+                  height={200}
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+
+            {/* Right - Form */}
+            <div className="bg-dark-teal border border-blue/10 p-8 md:p-10">
+              <h2 className="heading text-white text-2xl mb-2">
+                BECOME A PARTNER
+              </h2>
+              <p className="subheading text-blue text-xs mb-8">
+                REAL ESTATE AGENTS & REFERRAL PARTNERS
+              </p>
+              <PartnerForm />
+            </div>
           </div>
         </div>
 
         {/* Orange accent line at bottom */}
         <div className="absolute bottom-0 left-0 w-full h-1 bg-orange" />
+      </section>
+
+      {/* WHY MOVING MOUNTAINS - Orange background (bumped up) */}
+      <section className="bg-orange py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="heading text-white text-4xl md:text-5xl text-center mb-16">
+            WHY MOVING MOUNTAINS
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "TRUSTED MOVERS",
+                desc: "Trained in the discipline of doing things well. A move so smooth, you'll never think about it again.",
+              },
+              {
+                title: "$100 CLIENT DISCOUNT",
+                desc: "Your clients save on every move they book through your referral page.",
+              },
+              {
+                title: "YOUR OWN BRANDED PAGE",
+                desc: "Custom co-branded landing page with your photo, logo, and info.",
+              },
+              {
+                title: "DEDICATED SUPPORT",
+                desc: "A team that shows up every time. Forward, together.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="text-center">
+                <div className="w-12 h-0.5 bg-tan mx-auto mb-6" />
+                <h3 className="heading text-white text-lg mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-tan text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* HOW IT WORKS - Tan background */}
@@ -92,7 +152,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PARTNER SIGN-UP FORM - Navy background */}
+      {/* SECOND FORM - Navy background */}
       <section id="partner-form" className="bg-navy py-20 md:py-28 relative">
         <div className="absolute top-0 left-0 w-1/4 h-full opacity-5">
           <Image
@@ -106,51 +166,13 @@ export default function Home() {
 
         <div className="relative z-10 max-w-3xl mx-auto px-6">
           <h2 className="heading text-white text-4xl md:text-5xl text-center mb-3">
-            BECOME A PARTNER
+            READY TO GET STARTED?
           </h2>
           <p className="subheading text-blue text-sm text-center mb-12">
-            REAL ESTATE AGENTS & REFERRAL PARTNERS
+            SIGN UP BELOW AND WE&apos;LL BUILD YOUR PAGE
           </p>
 
           <PartnerForm />
-        </div>
-      </section>
-
-      {/* WHY MOVING MOUNTAINS - Orange background */}
-      <section className="bg-orange py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="heading text-white text-4xl md:text-5xl text-center mb-16">
-            WHY MOVING MOUNTAINS
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "TRUSTED MOVERS",
-                desc: "Trained in the discipline of doing things well. A move so smooth, you'll never think about it again.",
-              },
-              {
-                title: "$100 CLIENT DISCOUNT",
-                desc: "Your clients save on every move they book through your referral page.",
-              },
-              {
-                title: "YOUR OWN BRANDED PAGE",
-                desc: "Custom co-branded landing page with your photo, logo, and info.",
-              },
-              {
-                title: "DEDICATED SUPPORT",
-                desc: "A team that shows up every time. Forward, together.",
-              },
-            ].map((item) => (
-              <div key={item.title} className="text-center">
-                <div className="w-12 h-0.5 bg-tan mx-auto mb-6" />
-                <h3 className="heading text-white text-lg mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-tan text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -160,8 +182,8 @@ export default function Home() {
           <Image
             src="/brand/secondary_orange.svg"
             alt="Moving Mountains"
-            width={180}
-            height={40}
+            width={220}
+            height={50}
           />
           <div className="text-blue text-sm text-center md:text-right">
             <p>Moving Mountains &copy; {new Date().getFullYear()}</p>
