@@ -68,6 +68,33 @@ export async function POST(request: Request) {
       headshotUrl,
     });
 
+    // Send Quo text notifications to Winston and Benn
+    const quoApiKey = process.env.QUO_API_KEY;
+    if (quoApiKey) {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://moving-mountains-partners.vercel.app";
+      const message = `New referral partner signup!\n\n${firstName} ${lastName}\n${companyName} — ${brokerage}\n${email} | ${phone}\n\nPartner page: ${siteUrl}/partner/${slug}`;
+
+      const notifyNumbers = [
+        "+13093605587", // Benn
+        "+13097124480", // Winston (Aidan's line) — update if needed
+      ];
+
+      for (const to of notifyNumbers) {
+        fetch("https://api.quo.io/v1/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${quoApiKey}`,
+          },
+          body: JSON.stringify({
+            from: "+13092740694",
+            to,
+            content: message,
+          }),
+        }).catch((err) => console.error("Quo notification error:", err));
+      }
+    }
+
     return NextResponse.json({ success: true, slug });
   } catch (error) {
     console.error("Partner creation error:", error);

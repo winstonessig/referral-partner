@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function PartnerForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [partnerSlug, setPartnerSlug] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,11 +21,13 @@ export default function PartnerForm() {
         body: formData,
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.error || "Something went wrong");
       }
 
+      setPartnerSlug(data.slug);
       setStatus("success");
       form.reset();
     } catch (err) {
@@ -34,14 +37,23 @@ export default function PartnerForm() {
   }
 
   if (status === "success") {
+    const partnerUrl = `${window.location.origin}/partner/${partnerSlug}`;
     return (
       <div className="text-center py-16">
         <h3 className="heading text-orange text-3xl mb-4">YOU&apos;RE IN.</h3>
-        <p className="text-blue text-lg mb-2">
-          We&apos;ll build your co-branded page and send you the link.
+        <p className="text-blue text-lg mb-4">
+          Your co-branded page is live. Share it with your clients:
         </p>
-        <p className="text-white/60 text-sm">
-          Keep an eye on your email for next steps.
+        <a
+          href={partnerUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-brand btn-outline-white text-sm inline-block mb-6"
+        >
+          VIEW YOUR PAGE
+        </a>
+        <p className="text-white/40 text-xs break-all max-w-md mx-auto">
+          {partnerUrl}
         </p>
       </div>
     );
