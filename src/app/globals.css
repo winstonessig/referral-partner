@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "RT Austin Plain";
+  src: url("/fonts/RTAustinPlain-Two.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-navy: #052a31;
+  --color-blue: #71b0b3;
+  --color-orange: #e14b26;
+  --color-red: #7d252a;
+  --color-tan: #eedcc5;
+  --color-dark-teal: #1a2e35;
+  --color-black: #111b1f;
+  --color-white: #ffffff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-heading: "Roboto Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Roboto", sans-serif;
+  --font-accent: "RT Austin Plain", cursive;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-navy);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ALL CAPS heading utility */
+.heading {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.subheading {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+}
+
+.accent-text {
+  font-family: var(--font-accent);
+}
+
+/* Angled section divider */
+.angle-top {
+  clip-path: polygon(0 8%, 100% 0%, 100% 100%, 0 100%);
+}
+
+.angle-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+}
+
+/* Sharp button style per brand guide */
+.btn-brand {
+  display: inline-block;
+  padding: 14px 40px;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-orange {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border-color: var(--color-orange);
+}
+
+.btn-orange:hover {
+  background: transparent;
+  color: var(--color-orange);
+  border-color: var(--color-orange);
+}
+
+.btn-outline-white {
+  background: transparent;
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+.btn-outline-white:hover {
+  background: var(--color-white);
+  color: var(--color-navy);
+}
+
+/* Form inputs - sharp corners per brand guide */
+input, textarea, select {
+  border-radius: 0 !important;
 }

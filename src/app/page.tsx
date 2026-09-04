@@ -1,69 +1,174 @@
 import Image from "next/image";
+import PartnerForm from "@/components/PartnerForm";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      {/* HERO - Navy background */}
+      <section className="relative bg-navy min-h-[85vh] flex items-center overflow-hidden">
+        {/* Geometric line pattern bleeding off right edge */}
+        <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
+          <Image
+            src="/brand/pattern1_white.png"
+            alt=""
+            fill
+            className="object-cover"
+            aria-hidden="true"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 w-full">
+          <div className="max-w-3xl">
+            <p className="accent-text text-orange text-2xl md:text-3xl mb-4">
+              Setting your next chapter in motion.
+            </p>
+            <h1 className="heading text-5xl md:text-7xl lg:text-8xl text-white leading-[0.95] mb-6">
+              PARTNER WITH
+              <br />
+              <span className="text-orange">MOVING MOUNTAINS</span>
+            </h1>
+            <p className="text-blue text-lg md:text-xl max-w-xl mb-8">
+              Join our referral program. Give your clients $100 off their move
+              when they book with Moving Mountains.
+            </p>
+            <a href="#partner-form" className="btn-brand btn-orange text-sm">
+              BECOME A PARTNER
+            </a>
+          </div>
+
+          {/* Mountain badge */}
+          <div className="absolute right-8 bottom-12 hidden lg:block opacity-20">
             <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+              src="/brand/mountainbadge_orange.svg"
+              alt=""
+              width={300}
+              height={300}
+              aria-hidden="true"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+
+        {/* Orange accent line at bottom */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-orange" />
+      </section>
+
+      {/* HOW IT WORKS - Tan background */}
+      <section className="bg-tan py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="heading text-navy text-4xl md:text-5xl text-center mb-16">
+            HOW IT WORKS
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            {[
+              {
+                step: "01",
+                title: "SIGN UP",
+                desc: "Fill out the partner form with your details and upload your headshot and logo.",
+              },
+              {
+                step: "02",
+                title: "GET YOUR PAGE",
+                desc: "We build your custom co-branded landing page with your info and Moving Mountains branding.",
+              },
+              {
+                step: "03",
+                title: "SEND REFERRALS",
+                desc: "Share your page with clients. They save $100 on their move. You build trust.",
+              },
+            ].map((item) => (
+              <div key={item.step} className="text-center">
+                <span className="heading text-orange text-6xl block mb-4">
+                  {item.step}
+                </span>
+                <div className="w-12 h-0.5 bg-orange mx-auto mb-4" />
+                <h3 className="heading text-navy text-xl mb-3">{item.title}</h3>
+                <p className="text-navy/80 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PARTNER SIGN-UP FORM - Navy background */}
+      <section id="partner-form" className="bg-navy py-20 md:py-28 relative">
+        <div className="absolute top-0 left-0 w-1/4 h-full opacity-5">
+          <Image
+            src="/brand/pattern2_white.png"
+            alt=""
+            fill
+            className="object-cover"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto px-6">
+          <h2 className="heading text-white text-4xl md:text-5xl text-center mb-3">
+            BECOME A PARTNER
+          </h2>
+          <p className="subheading text-blue text-sm text-center mb-12">
+            REAL ESTATE AGENTS & REFERRAL PARTNERS
+          </p>
+
+          <PartnerForm />
+        </div>
+      </section>
+
+      {/* WHY MOVING MOUNTAINS - Orange background */}
+      <section className="bg-orange py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="heading text-white text-4xl md:text-5xl text-center mb-16">
+            WHY MOVING MOUNTAINS
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "TRUSTED MOVERS",
+                desc: "Trained in the discipline of doing things well. A move so smooth, you'll never think about it again.",
+              },
+              {
+                title: "$100 CLIENT DISCOUNT",
+                desc: "Your clients save on every move they book through your referral page.",
+              },
+              {
+                title: "YOUR OWN BRANDED PAGE",
+                desc: "Custom co-branded landing page with your photo, logo, and info.",
+              },
+              {
+                title: "DEDICATED SUPPORT",
+                desc: "A team that shows up every time. Forward, together.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="text-center">
+                <div className="w-12 h-0.5 bg-tan mx-auto mb-6" />
+                <h3 className="heading text-white text-lg mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-tan text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-dark-teal py-12">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <Image
+            src="/brand/secondary_orange.svg"
+            alt="Moving Mountains"
+            width={180}
+            height={40}
+          />
+          <div className="text-blue text-sm text-center md:text-right">
+            <p>Moving Mountains &copy; {new Date().getFullYear()}</p>
+            <p className="text-blue/60 mt-1">Excellence on the move.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
