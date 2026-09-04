@@ -2,16 +2,15 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { partners } from "@/lib/schema";
 import { sendPartnerWelcomeEmail } from "@/lib/email";
+import { eq } from "drizzle-orm";
 import { put } from "@vercel/blob";
 
 function slugify(firstName: string, lastName: string): string {
-  const base = `${firstName}-${lastName}`
+  return `${firstName}-${lastName}`
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
-  const suffix = Math.random().toString(36).substring(2, 6);
-  return `${base}-${suffix}`;
 }
 
 export async function POST(request: Request) {
@@ -29,7 +28,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
-    const slug = slugify(firstName, lastName);
+    let slug = slugify(firstName, lastName);
+
+    // If slug already taken, append a number
+    const existing = await db.select().from(partners).where(eq(partners.slug, slug)).get();
+    if (existing) {
+      let i = 2;
+      while (await db.select().from(partners).where(eq(partners.slug, `${slug}-${i}`)).get()) {
+        i++;
+      }
+      slug = `${slug}-${i}`;
+    }
 
     // Handle file uploads via Vercel Blob
     let headshotUrl: string | null = null;
