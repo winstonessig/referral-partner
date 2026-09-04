@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { partners } from "@/lib/schema";
 import { sendPartnerWelcomeEmail } from "@/lib/email";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put } from "@vercel/blob";
 
 function slugify(firstName: string, lastName: string): string {
   const base = `${firstName}-${lastName}`
@@ -32,29 +31,24 @@ export async function POST(request: Request) {
 
     const slug = slugify(firstName, lastName);
 
-    // Handle file uploads
+    // Handle file uploads via Vercel Blob
     let headshotUrl: string | null = null;
     let logoUrl: string | null = null;
 
-    const uploadsDir = path.join(process.cwd(), "public", "uploads", slug);
-    await mkdir(uploadsDir, { recursive: true });
-
     const headshot = formData.get("headshot") as File | null;
     if (headshot && headshot.size > 0) {
-      const ext = headshot.name.split(".").pop();
-      const filename = `headshot.${ext}`;
-      const buffer = Buffer.from(await headshot.arrayBuffer());
-      await writeFile(path.join(uploadsDir, filename), buffer);
-      headshotUrl = `/uploads/${slug}/${filename}`;
+      const blob = await put(`partners/${slug}/headshot-${headshot.name}`, headshot, {
+        access: "public",
+      });
+      headshotUrl = blob.url;
     }
 
     const logo = formData.get("logo") as File | null;
     if (logo && logo.size > 0) {
-      const ext = logo.name.split(".").pop();
-      const filename = `logo.${ext}`;
-      const buffer = Buffer.from(await logo.arrayBuffer());
-      await writeFile(path.join(uploadsDir, filename), buffer);
-      logoUrl = `/uploads/${slug}/${filename}`;
+      const blob = await put(`partners/${slug}/logo-${logo.name}`, logo, {
+        access: "public",
+      });
+      logoUrl = blob.url;
     }
 
     await db.insert(partners).values({
@@ -70,7 +64,7 @@ export async function POST(request: Request) {
     });
 
     // Send welcome email to partner with their page link
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://moving-mountains-partners.vercel.app";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.movingmountainspartner.com";
     const partnerUrl = `${siteUrl}/partner/${slug}`;
 
     sendPartnerWelcomeEmail({
@@ -87,7 +81,7 @@ export async function POST(request: Request) {
 
       const notifyNumbers = [
         "+13093605587", // Benn
-        "+13097124480", // Winston (Aidan's line) — update if needed
+        "+13097124480", // Winston
       ];
 
       for (const to of notifyNumbers) {
