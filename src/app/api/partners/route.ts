@@ -90,7 +90,7 @@ export async function POST(request: Request) {
 
       const notifyNumbers = [
         "+13093605587", // Benn
-        "+13097124480", // Winston
+        "+13096424415", // Winston
       ];
 
       for (const to of notifyNumbers) {

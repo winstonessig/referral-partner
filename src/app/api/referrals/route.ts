@@ -92,7 +92,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           from: "+13092740694",
-          to: "+13097124480",
+          to: "+13096424415",
           content: textMessage,
         }),
       }).catch((err) => console.error("Quo notification error:", err));
