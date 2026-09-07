@@ -3,6 +3,7 @@ import { partners, referrals } from "@/lib/schema";
 import { desc, eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
+import ReviewOutreachForm from "@/components/ReviewOutreachForm";
 
 export const dynamic = "force-dynamic";
 
@@ -60,6 +61,16 @@ export default async function AdminPage() {
             </p>
             <p className="subheading text-blue text-xs mt-1">NEW THIS MONTH</p>
           </div>
+        </div>
+
+        {/* Review Outreach Agent */}
+        <div className="mb-12 bg-dark-teal border border-orange/20 p-8">
+          <h2 className="heading text-orange text-2xl mb-2">5-STAR REVIEW OUTREACH AGENT</h2>
+          <p className="text-blue text-sm mb-6">
+            Paste a 5-star review below. The agent will match the reviewer to a completed job,
+            research who their realtor/builder/complex was, and send them the outreach text sequence.
+          </p>
+          <ReviewOutreachForm />
         </div>
 
         {/* Partners Table */}
