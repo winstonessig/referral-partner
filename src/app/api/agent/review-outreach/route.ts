@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const customer = result.rows[0] as {
+    const customer = result.rows[0] as unknown as {
       customerName: string;
       originAddress: string | null;
       originCity: string | null;
