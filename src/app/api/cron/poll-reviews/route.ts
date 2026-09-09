@@ -28,31 +28,39 @@ interface GoogleReview {
 
 async function fetchGoogleReviews(): Promise<GoogleReview[]> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
+  const placeIds = (process.env.GOOGLE_PLACE_IDS || "").split(",").filter(Boolean);
 
-  if (!apiKey || !placeId) {
-    console.error("Missing GOOGLE_PLACES_API_KEY or GOOGLE_PLACE_ID");
+  if (!apiKey || placeIds.length === 0) {
+    console.error("Missing GOOGLE_PLACES_API_KEY or GOOGLE_PLACE_IDS");
     return [];
   }
 
-  // Use Places API (New) to get reviews
-  const res = await fetch(
-    `https://places.googleapis.com/v1/places/${placeId}?fields=reviews&key=${apiKey}`,
-    {
-      headers: {
-        "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "reviews",
-      },
+  const allReviews: GoogleReview[] = [];
+
+  // Poll both Washington and Bloomington locations
+  for (const placeId of placeIds) {
+    const res = await fetch(
+      `https://places.googleapis.com/v1/places/${placeId.trim()}?fields=reviews&key=${apiKey}`,
+      {
+        headers: {
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask": "reviews",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      console.error(`Google Places API error for ${placeId}:`, res.status, await res.text());
+      continue;
     }
-  );
 
-  if (!res.ok) {
-    console.error("Google Places API error:", res.status, await res.text());
-    return [];
+    const data = await res.json();
+    if (data.reviews) {
+      allReviews.push(...data.reviews);
+    }
   }
 
-  const data = await res.json();
-  return data.reviews || [];
+  return allReviews;
 }
 
 export async function GET(request: Request) {
