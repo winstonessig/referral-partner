@@ -4,6 +4,7 @@ import { desc, eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 import ReviewOutreachForm from "@/components/ReviewOutreachForm";
+import DeleteButton from "@/components/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,7 @@ export default async function AdminPage() {
                   <th className="subheading text-blue text-xs text-left py-3 px-4">REFERRALS</th>
                   <th className="subheading text-blue text-xs text-left py-3 px-4">PAGE</th>
                   <th className="subheading text-blue text-xs text-left py-3 px-4">SIGNED UP</th>
+                  <th className="subheading text-blue text-xs text-left py-3 px-4"></th>
                 </tr>
               </thead>
               <tbody>
@@ -130,12 +132,15 @@ export default async function AdminPage() {
                       <td className="text-blue/60 text-xs py-3 px-4">
                         {new Date(partner.createdAt).toLocaleDateString()}
                       </td>
+                      <td className="py-3 px-4">
+                        <DeleteButton id={partner.id} type="partner" />
+                      </td>
                     </tr>
                   );
                 })}
                 {allPartners.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="text-blue/40 text-sm text-center py-8">
+                    <td colSpan={9} className="text-blue/40 text-sm text-center py-8">
                       No partners yet.
                     </td>
                   </tr>
@@ -159,6 +164,7 @@ export default async function AdminPage() {
                   <th className="subheading text-blue text-xs text-left py-3 px-4">MESSAGE</th>
                   <th className="subheading text-blue text-xs text-left py-3 px-4">REFERRED BY</th>
                   <th className="subheading text-blue text-xs text-left py-3 px-4">SUBMITTED</th>
+                  <th className="subheading text-blue text-xs text-left py-3 px-4"></th>
                 </tr>
               </thead>
               <tbody>
@@ -187,12 +193,15 @@ export default async function AdminPage() {
                       <td className="text-blue/60 text-xs py-3 px-4">
                         {new Date(ref.createdAt).toLocaleDateString()}
                       </td>
+                      <td className="py-3 px-4">
+                        <DeleteButton id={ref.id} type="referral" />
+                      </td>
                     </tr>
                   );
                 })}
                 {allReferrals.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="text-blue/40 text-sm text-center py-8">
+                    <td colSpan={8} className="text-blue/40 text-sm text-center py-8">
                       No referrals yet.
                     </td>
                   </tr>

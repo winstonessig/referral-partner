@@ -145,7 +145,7 @@ export default function PartnerForm() {
             type="file"
             name="headshot"
             accept="image/*"
-            className="w-full bg-dark-teal border border-blue/30 text-white px-4 py-3 file:mr-4 file:bg-orange file:text-white file:border-0 file:px-4 file:py-1 file:cursor-pointer file:font-bold file:text-xs file:uppercase file:tracking-wider"
+            className="w-full bg-dark-teal border border-blue/30 text-white px-4 py-3 text-sm file:mr-4 file:bg-orange file:text-white file:border-0 file:px-4 file:py-1 file:cursor-pointer file:font-bold file:text-xs file:uppercase file:tracking-wider [&::file-selector-button]:mr-4"
           />
         </div>
         <div>
@@ -156,7 +156,7 @@ export default function PartnerForm() {
             type="file"
             name="logo"
             accept="image/*"
-            className="w-full bg-dark-teal border border-blue/30 text-white px-4 py-3 file:mr-4 file:bg-orange file:text-white file:border-0 file:px-4 file:py-1 file:cursor-pointer file:font-bold file:text-xs file:uppercase file:tracking-wider"
+            className="w-full bg-dark-teal border border-blue/30 text-white px-4 py-3 text-sm file:mr-4 file:bg-orange file:text-white file:border-0 file:px-4 file:py-1 file:cursor-pointer file:font-bold file:text-xs file:uppercase file:tracking-wider [&::file-selector-button]:mr-4"
           />
         </div>
       </div>
