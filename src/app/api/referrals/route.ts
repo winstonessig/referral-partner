@@ -63,40 +63,8 @@ export async function POST(request: Request) {
         .catch((err) => console.error("SmartMoving error:", err));
     }
 
-    // Send Quo text to Benn with client info
-    const quoApiKey = process.env.QUO_API_KEY;
-    if (quoApiKey) {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.movingmountainspartner.com";
-      const textMessage = `New referral lead!\n\nClient: ${firstName} ${lastName}\nPhone: ${phone}\nEmail: ${email}\nMove date: ${moveDate || "Not specified"}\n${message ? `Notes: ${message}\n` : ""}\nReferred by: ${partnerName}${partner ? ` (${partner.companyName})` : ""}\n\n$100 discount — lead pushed to SmartMoving.`;
-
-      // Text Benn
-      fetch("https://api.quo.io/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${quoApiKey}`,
-        },
-        body: JSON.stringify({
-          from: "+13092740694",
-          to: "+13093605587",
-          content: textMessage,
-        }),
-      }).catch((err) => console.error("Quo notification error:", err));
-
-      // Text Winston
-      fetch("https://api.quo.io/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${quoApiKey}`,
-        },
-        body: JSON.stringify({
-          from: "+13092740694",
-          to: "+13096424415",
-          content: textMessage,
-        }),
-      }).catch((err) => console.error("Quo notification error:", err));
-    }
+    // TODO: Re-enable SMS notifications when Blooio is ready
+    // Quo notifications disabled for now
 
     return NextResponse.json({ success: true });
   } catch (error) {

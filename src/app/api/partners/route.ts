@@ -83,31 +83,8 @@ export async function POST(request: Request) {
       partnerUrl,
     }).catch((err) => console.error("Welcome email error:", err));
 
-    // Send Quo text notifications to Winston and Benn
-    const quoApiKey = process.env.QUO_API_KEY;
-    if (quoApiKey) {
-      const message = `New referral partner signup!\n\n${firstName} ${lastName}\n${companyName} — ${brokerage}\n${email} | ${phone}\n\nPartner page: ${partnerUrl}`;
-
-      const notifyNumbers = [
-        "+13093605587", // Benn
-        "+13096424415", // Winston
-      ];
-
-      for (const to of notifyNumbers) {
-        fetch("https://api.quo.io/v1/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${quoApiKey}`,
-          },
-          body: JSON.stringify({
-            from: "+13092740694",
-            to,
-            content: message,
-          }),
-        }).catch((err) => console.error("Quo notification error:", err));
-      }
-    }
+    // TODO: Re-enable SMS notifications when Blooio is ready
+    // Quo notifications disabled for now
 
     return NextResponse.json({ success: true, slug });
   } catch (error) {
