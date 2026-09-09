@@ -49,7 +49,7 @@ export async function sendPartnerWelcomeEmail({
     : "";
 
   await resend.emails.send({
-    from: "Moving Mountains <office@movingmountainspartners.com>",
+    from: "Moving Mountains <office@movingmountainspartner.com>",
     to,
     subject: `Your Moving Mountains partner page is live, ${firstName}!`,
     html: `
